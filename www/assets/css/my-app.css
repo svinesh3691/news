@@ -1,0 +1,63 @@
+
+    body {
+        background:#000;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:14px;color:#000;margin:0;padding:2%;
+        overflow-x: hidden; 
+    }
+    .swiper-container {
+        width:100%;
+        height:98vh;
+    }
+    .swiper-slide {
+        background: #fff;
+        font-size:18px;
+    }
+    .app-swiper {
+        height: 98vh;
+        display: block !important;
+        border-radius: 12px;
+
+    }
+
+    .app-img {
+        height: 46vh;
+        width: 100%;
+        background-size: cover;
+    }
+    .img-tag {
+        border-radius: 12px 12px 0px   0px ;
+        width: 100%;
+        height: 100%;
+    }
+    .app-con {
+        padding: 6px;
+    }
+
+    .page {
+          font-family: 'Roboto',sans-serif;
+          font-weight: 300;
+          background: black !important;
+    }
+
+    .app-head {
+          font-size: 18px;
+          line-height: 24px;
+          margin: 10px 0;
+    }
+    .app-news {
+            font-size: 14px;
+            line-height: 22px;
+    }
+    .app-by {
+      font-size: 12px;
+      line-height: 22px;
+      color: #808290;
+    }
+    .app-more {
+      font-size: 10px;
+    }
+    .navbar-fixed .page-content {
+          padding-top: 0px;
+          border-radius: 16px;
+          padding: 3px;
+    }
+
