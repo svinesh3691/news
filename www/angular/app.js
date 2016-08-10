@@ -117,59 +117,7 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService , $http
                 }
                 setTimeout(function(){
                     // new pusher();
-
-
-
-                        alert('Initializing Push...');
-                        
-                        var push = PushNotification.init({
-                            "android": {
-                                "senderID": "730309421478"
-                            },
-                        });
-
-                        push.on('registration', function(data) {
-                            alert('Registering');
-
-                            var oldRegId = localStorage.getItem('registrationId');
-                            if (oldRegId !== data.registrationId) {
-                                console.log('registration event: ' + data.registrationId);
-                                localStorage.setItem('registrationId', data.registrationId);
-                                $http.post(C.api_site_url+'push/register', {id:data.registrationId}).then(function(){
-                                    alert('success');
-                                    localStorage.registrationId = data.registrationId;
-                                    localStorage.push = 1;
-                                });
-                            }
-
-                        });
-
-                        push.on('error', function(e) {
-                            alert('errror');
-                            console.log("push error = " + e.message);
-                        });
-
-                        push.on('notification', function(data) { 
-                            alert('Push notification success!');
-                            alert(data.additionalData.id);
-                            // TpushService.push_news(data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
-                            // console.log('data.message');
-                            // console.log(data.message);
-                            // console.log(data.title);
-                            // console.log(data.count);
-                            // console.log(data.sound);
-                            // console.log(data.image);
-                            // console.log('data.additionalData');
-                            // console.log(data.test);
-                            // console.log(data.additionalData.id);
-                            // console.log(data.additionalData.foreground);
-                            // console.log(data.additionalData.coldstart);
-
-                        });
-
-
-
-                },1000)
+                },3000)
             }
 
 }]);
