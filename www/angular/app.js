@@ -104,7 +104,7 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService , $http
             push_news = function(news_id,news_title,news_body,news_image,news_type,news_add_date) {
                     fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
                              // newsFactory.news_refresh();
-                             window.location.reload();
+                             // window.location.reload();
                     });
             }
 

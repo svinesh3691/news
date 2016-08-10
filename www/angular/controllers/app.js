@@ -86,7 +86,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
 
             TpushService.push_news = function(news_id,news_title,news_body,news_image,news_type,news_add_date) {
                     fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
-                             newsFactory.news_refresh();
+                            newsFactory.newsRefresh();
                              // window.location.reload();
                     });
             }
@@ -101,9 +101,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                     new TpushService.push();
                 },3000)
 
-                setTimeout(function(){
-                    newsFactory.newsRefresh();
-                },7000);
+
             // }
 
 
