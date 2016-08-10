@@ -26,7 +26,7 @@ app.factory("newsFactory", ['$http','C','fns', function($http,C,fns) {
     var obj = {};
     obj.theNewsArray = [];
     obj.newsRefresh  = function () {
-        fns.query('SELECT * FROM news_main',[],function(res){
+        fns.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
                 for (var i = 0;k = res.result.rows.length, i< k; i++) {
                     var thisNews = res.result.rows.item(i);
                     thisNews.news_add_date = new Date(thisNews.news_add_date);

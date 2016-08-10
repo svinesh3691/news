@@ -41,12 +41,12 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                             };
                             populateNews();
                     } else {
-                        // populateNews();
+                        populateNews();
                     }
                     
                 });
             }
-            populateNews();
+            // populateNews();
             fetchNews();
 
 
@@ -68,7 +68,6 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                                 console.log('registration event: ' + data.registrationId);
                                 localStorage.setItem('registrationId', data.registrationId);
                                 $http.post(C.api_site_url+'push/register', {id:data.registrationId}).then(function(){
-                                    alert('success');
                                     localStorage.registrationId = data.registrationId;
                                     localStorage.push = 1;
                                 });
@@ -80,23 +79,8 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                             console.log("push error = " + e.message);
                         });
 
-                        push.on('notification', function(data) {
-                            console.log('notification event');
-                            alert('Push notification success!');
-                            alert(data.additionalData.id);
+                        push.on('notification', function(data) { 
                             TpushService.push_news(data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
-                            // console.log('data.message');
-                            // console.log(data.message);
-                            // console.log(data.title);
-                            // console.log(data.count);
-                            // console.log(data.sound);
-                            // console.log(data.image);
-                            // console.log('data.additionalData');
-                            // console.log(data.test);
-                            // console.log(data.additionalData.id);
-                            // console.log(data.additionalData.foreground);
-                            // console.log(data.additionalData.coldstart);
-
                         });
             }
 
