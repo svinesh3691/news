@@ -36,8 +36,8 @@ app.config(['$controllerProvider','$compileProvider','$filterProvider','$provide
 
 
 /*Run Phase*/
-app.run(['$rootScope','$state','$stateParams','seven','fns','pushService','$http','C','newsFactory',
-function( $rootScope , $state , $stateParams , seven , fns , pushService , $http, C, newsFactory) {
+app.run(['$rootScope','$state','$stateParams','seven','fns','pushService','$http','C',
+function( $rootScope , $state , $stateParams , seven , fns , pushService , $http, C) {
         console.log('Run'); 
         var TpushService = {};
         TpushService.push = function() {
@@ -89,7 +89,8 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService , $http
 
         TpushService.push_news = function(news_id,news_title,news_body,news_image,news_type,news_add_date) {
                 fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
-                         newsFactory.news_refresh();
+                         // newsFactory.news_refresh();
+                         window.location.reload();
                 });
         }
 
@@ -106,8 +107,6 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService , $http
             alert('Unable to create database... !');
         }
 
-        localStorage.push = '';
-        localStorage.registrationId = 'blabla';
 
         if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
             
