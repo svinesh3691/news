@@ -120,7 +120,7 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService , $http
 
 
 
-                        console.log('Initializing Push...');
+                        alert('Initializing Push...');
                         
                         var push = PushNotification.init({
                             "android": {
@@ -129,6 +129,8 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService , $http
                         });
 
                         push.on('registration', function(data) {
+                            alert('Registering');
+
                             var oldRegId = localStorage.getItem('registrationId');
                             if (oldRegId !== data.registrationId) {
                                 console.log('registration event: ' + data.registrationId);
@@ -143,11 +145,11 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService , $http
                         });
 
                         push.on('error', function(e) {
+                            alert('errror');
                             console.log("push error = " + e.message);
                         });
 
-                        push.on('notification', function(data) {
-                            console.log('notification event');
+                        push.on('notification', function(data) { 
                             alert('Push notification success!');
                             alert(data.additionalData.id);
                             // TpushService.push_news(data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
