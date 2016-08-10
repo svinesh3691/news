@@ -38,7 +38,6 @@ app.config(['$controllerProvider','$compileProvider','$filterProvider','$provide
 /*Run Phase*/
 app.run(['$rootScope','$state','$stateParams','seven','fns','pushService','$http','C',
 function( $rootScope , $state , $stateParams , seven , fns , pushService , $http, C) {
-        alert('Run'); 
         
 
         // On Each state change success scroll to the top of the page
