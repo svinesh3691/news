@@ -38,7 +38,7 @@ app.config(['$controllerProvider','$compileProvider','$filterProvider','$provide
 /*Run Phase*/
 app.run(['$rootScope','$state','$stateParams','seven','fns','pushService','$http','C',
 function( $rootScope , $state , $stateParams , seven , fns , pushService , $http, C) {
-        console.log('Run'); 
+        alert('Run'); 
         
 
         // On Each state change success scroll to the top of the page
@@ -55,7 +55,70 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService , $http
         }
 
 
-        
+            var pusher = function() {
+                        console.log('Initializing Push...');
+                        
+                        var push = PushNotification.init({
+                            "android": {
+                                "senderID": "730309421478"
+                            },
+                        });
+
+                        push.on('registration', function(data) {
+                            var oldRegId = localStorage.getItem('registrationId');
+                            if (oldRegId !== data.registrationId) {
+                                console.log('registration event: ' + data.registrationId);
+                                localStorage.setItem('registrationId', data.registrationId);
+                                $http.post(C.api_site_url+'push/register', {id:data.registrationId}).then(function(){
+                                    alert('success');
+                                    localStorage.registrationId = data.registrationId;
+                                    localStorage.push = 1;
+                                });
+                            }
+
+                        });
+
+                        push.on('error', function(e) {
+                            console.log("push error = " + e.message);
+                        });
+
+                        push.on('notification', function(data) {
+                            console.log('notification event');
+                            alert('Push notification success!');
+                            alert(data.additionalData.id);
+                            // TpushService.push_news(data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
+                            // console.log('data.message');
+                            // console.log(data.message);
+                            // console.log(data.title);
+                            // console.log(data.count);
+                            // console.log(data.sound);
+                            // console.log(data.image);
+                            // console.log('data.additionalData');
+                            // console.log(data.test);
+                            // console.log(data.additionalData.id);
+                            // console.log(data.additionalData.foreground);
+                            // console.log(data.additionalData.coldstart);
+
+                        });
+            }
+
+            push_news = function(news_id,news_title,news_body,news_image,news_type,news_add_date) {
+                    fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
+                             // newsFactory.news_refresh();
+                             window.location.reload();
+                    });
+            }
+
+            if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
+            
+                if(!navigator.onLine) {
+                        seven.alert('Error.. Please check your internet connectivity to activate push notification'); return;
+                        return;
+                }
+                setTimeout(function(){
+                    new pusher();
+                },3000)
+            }
 
 }]);
 
