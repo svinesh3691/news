@@ -16,8 +16,8 @@ app.controller('app', ['$scope','seven','$state','webServices','fns','C','$http'
 }]);
 
 // Home Controller
-app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsFactory',
-    function ( $scope , fns , seven , $state, webServices, C , newsFactory) {
+app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsFactory','$http',
+    function ( $scope , fns , seven , $state, webServices, C , newsFactory,$http) {
             seven.hideIndicator();
             $scope.newses = [];
             $scope.api_base_url = C.api_base_url;
@@ -106,7 +106,8 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                              window.location.reload();
                     });
             }
-
+            localStorage.push = '';
+            localStorage.registrationId = '';
             if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
             
                 if(!navigator.onLine) {
