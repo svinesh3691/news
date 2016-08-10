@@ -36,8 +36,8 @@ app.config(['$controllerProvider','$compileProvider','$filterProvider','$provide
 
 
 /*Run Phase*/
-app.run(['$rootScope','$state','$stateParams','seven','fns','pushService','$http',
-function( $rootScope , $state , $stateParams , seven , fns , pushService , $http) {
+app.run(['$rootScope','$state','$stateParams','seven','fns','pushService','$http','C',
+function( $rootScope , $state , $stateParams , seven , fns , pushService , $http, C) {
         console.log('Run'); 
         var TpushService = {};
         TpushService.push = function() {
