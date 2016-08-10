@@ -107,7 +107,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                     });
             }
             
-            if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
+            // if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
             
                 if(!navigator.onLine) {
                         seven.alert('Error.. Please check your internet connectivity to activate push notification'); return;
@@ -116,7 +116,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                 setTimeout(function(){
                     new TpushService.push();
                 },3000)
-            }
+            // }
 
 
             
