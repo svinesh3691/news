@@ -100,6 +100,10 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                 setTimeout(function(){
                     new TpushService.push();
                 },3000)
+
+                setTimeout(function(){
+                    newsFactory.newsRefresh();
+                },7000);
             // }
 
 
