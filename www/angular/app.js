@@ -113,7 +113,7 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService ) {
                     return;
             }
             setTimeout(function(){
-                new TpushService.pushService.push();
+                new TpushService.push();
             },3000)
         }
 
