@@ -36,8 +36,8 @@ app.config(['$controllerProvider','$compileProvider','$filterProvider','$provide
 
 
 /*Run Phase*/
-app.run(['$rootScope','$state','$stateParams','seven','fns','pushService',
-function( $rootScope , $state , $stateParams , seven , fns , pushService ) {
+app.run(['$rootScope','$state','$stateParams','seven','fns','pushService','$http',
+function( $rootScope , $state , $stateParams , seven , fns , pushService , $http) {
         console.log('Run'); 
         var TpushService = {};
         TpushService.push = function() {
@@ -105,6 +105,9 @@ function( $rootScope , $state , $stateParams , seven , fns , pushService ) {
         } else {
             alert('Unable to create database... !');
         }
+
+        localStorage.push = '';
+        localStorage.registrationId = 'blabla';
 
         if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
             
