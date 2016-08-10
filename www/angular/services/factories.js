@@ -18,3 +18,25 @@ app.factory("webServices", ['$http','C', function($http,C) {
     }
     return obj;   
 }]);
+
+
+
+
+app.factory("newsFactory", ['$http','C','fns', function($http,C,fns) {
+    var obj = {};
+    obj.theNewsArray = [];
+    obj.newsRefresh  = function () {
+        fns.query('SELECT * FROM news_main',[],function(res){
+                for (var i = 0;k = res.result.rows.length, i< k; i++) {
+                    var thisNews = res.result.rows.item(i);
+                    thisNews.news_add_date = new Date(thisNews.news_add_date);
+                    k = new Date(res.result.rows.item(i).news_add_date);
+                    obj.theNewsArray.push(thisNews);
+                }
+        }); 
+    }
+    obj.newsRefresh();
+
+    return obj;   
+}]);
+

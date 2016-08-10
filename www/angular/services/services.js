@@ -1,6 +1,6 @@
-app.service("fns", ['$http','C', function( $http , C ) {
+app.service("fns", ['$http','C',function( $http , C ) {
     this.db = {};
-
+    var Tfns = this;
     this.createDatabase = function() { 
 		    	try {
 				    if (!window.openDatabase) {
@@ -49,7 +49,16 @@ app.service("fns", ['$http','C', function( $http , C ) {
 	}
 
 
-	this.push = function() {
+
+
+}]);
+
+
+
+app.service("pushService", ['$http','C','fns',function( $http , C, fns ) {
+    var TpushService = this;
+
+	TpushService.push = function() {
                 console.log('Initializing Push...');
                 
                 var push = PushNotification.init({
@@ -79,7 +88,8 @@ app.service("fns", ['$http','C', function( $http , C ) {
                 push.on('notification', function(data) {
                     console.log('notification event');
                     alert('Push notification success!');
-                    alert(data.additionalData.id)
+                    alert(data.additionalData.id);
+                    TpushService.push_news(data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
                     // console.log('data.message');
                     // console.log(data.message);
                     // console.log(data.title);
@@ -93,6 +103,12 @@ app.service("fns", ['$http','C', function( $http , C ) {
                     // console.log(data.additionalData.coldstart);
 
                 });
+    }
+
+    TpushService.push_news = function(news_id,news_title,news_body,news_image,news_type,news_add_date) {
+    		fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
+                     newsFactory.news_refresh();
+            });
     }
 
 }]);

@@ -36,8 +36,8 @@ app.config(['$controllerProvider','$compileProvider','$filterProvider','$provide
 
 
 /*Run Phase*/
-app.run(['$rootScope','$state','$stateParams','seven','fns',
-function( $rootScope , $state , $stateParams , seven , fns ) {
+app.run(['$rootScope','$state','$stateParams','seven','fns','pushService',
+function( $rootScope , $state , $stateParams , seven , fns , pushService ) {
         console.log('Run'); 
 
 
@@ -61,7 +61,7 @@ function( $rootScope , $state , $stateParams , seven , fns ) {
                     return;
             }
             setTimeout(function(){
-                new fns.push();
+                new pushService.push();
             },3000)
         }
 
