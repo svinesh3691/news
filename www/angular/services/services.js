@@ -89,7 +89,7 @@ app.service("pushService", ['$http','C','fns',function( $http , C, fns ) {
                     console.log('notification event');
                     alert('Push notification success!');
                     alert(data.additionalData.id);
-                    TpushService.push_news(data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
+                    //TpushService.push_news(data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
                     // console.log('data.message');
                     // console.log(data.message);
                     // console.log(data.title);
