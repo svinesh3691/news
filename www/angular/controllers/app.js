@@ -1,6 +1,6 @@
 // App Controller
-app.controller('app', ['$scope','seven','$state','services','fns','C','$http',
-    function ( $scope, seven, $state, services, fns,C,$http) {
+app.controller('app', ['$scope','seven','$state','webServices','fns','C','$http',
+    function ( $scope, seven, $state, webServices, fns,C,$http) {
             seven.hideIndicator();
             // Go back function
             $scope.goBack = function() {
@@ -8,82 +8,52 @@ app.controller('app', ['$scope','seven','$state','services','fns','C','$http',
             }
             
 
-            var push = function() {
-                console.log('Initializing Push...');
-                
-                var push = PushNotification.init({
-                    "android": {
-                        "senderID": "730309421478"
-                    },
-                });
-
-                push.on('registration', function(data) {
-                    console.log('registration event: ' + data.registrationId);
-                    var oldRegId = localStorage.getItem('registrationId');
-                    console.log(oldRegId);
-                    if (oldRegId !== data.registrationId) {
-                        console.log('saving new');
-
-                        // Save new registration ID
-                        localStorage.setItem('registrationId', data.registrationId);
-                        // Post registrationId to your app server as the value has changed
-                        console.log('post new');
-                        console.log(C.api_site_url+'push/register');
-                        $http.post(C.api_site_url+'push/register', {id:data.registrationId}).then(function(){
-                            alert('success');
-                            localStorage.registrationId = data.registrationId;
-                            localStorage.push = 1;
-                        });
-                    }
-
-                    alert(data.registrationId);
-                });
-
-                push.on('error', function(e) {
-                    console.log("push error = " + e.message);
-                });
-
-                push.on('notification', function(data) {
-                    console.log('notification event');
-                    alert('Push notification success!');
-                    alert(data.additionalData.id)
-                    alert(data.id)
-                    // console.log('data.message');
-                    // console.log(data.message);
-                    // console.log(data.title);
-                    // console.log(data.count);
-                    // console.log(data.sound);
-                    // console.log(data.image);
-                    // console.log('data.additionalData');
-                    // console.log(data.test);
-                    // console.log(data.additionalData.id);
-                    // console.log(data.additionalData.foreground);
-                    // console.log(data.additionalData.coldstart);
-
-
-
-
-                });
-            }
-
-
-            if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
-                
-                if(!navigator.onLine) {
-                        seven.alert('Error.. Please check your internet connectivity to activate push notification'); return;
-                        return;
-                }
-                setTimeout(function(){
-                    new push();
-                },3000)
-            }
-
+            
 }]);
 
 // Home Controller
-app.controller('news', ['$scope','fns','seven','$state',
-    function ( $scope , fns , seven , $state ) {
+app.controller('news', ['$scope','fns','seven','$state','webServices','C',
+    function ( $scope , fns , seven , $state, webServices, C ) {
             seven.hideIndicator();
+            $scope.newses = [];
+            $scope.api_base_url = C.api_base_url;
+            var tillNow = localStorage.tillNow || 0;
+            var populateNews = function() {
+                fns.query('SELECT * FROM news_main',[],function(res){
+                                $scope.data = [];
+                                for (var i = 0;k = res.result.rows.length, i< k; i++) {
+                                    var thisNews = res.result.rows.item(i);
+                                    thisNews.news_add_date = new Date(thisNews.news_add_date);
+                                    k = new Date(res.result.rows.item(i).news_add_date);
+                                    $scope.newses.push(thisNews);
+                                }
+                                console.log($scope.newses);
+                                $scope.$apply();
+                });
+            }
+            var fetchNews = function() {
+                webServices.master('api/fetchNews',{
+                            'tillNow'       : tillNow
+                }).then(function(res){
+                    if(res.data.news) {
+                            console.log(res.data.news.length);
+                            localStorage.tillNow = res.data.news[res.data.news.length-1].news_id;
+
+                            for (var i = 0 ; i < res.data.news.length; i++) {
+                                        console.log(res.data.news[i]);
+                                        fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [res.data.news[i].news_id,res.data.news[i].news_title,res.data.news[i].news_body,res.data.news[i].news_image,res.data.news[i].news_type,res.data.news[i].news_add_date],function(res){
+                                            console.log(res);
+                                        });
+                            };
+                            populateNews();
+                    } else {
+                        // populateNews();
+                    }
+                    
+                });
+            }
+            populateNews();
+            fetchNews();
 }]);
 
 

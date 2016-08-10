@@ -1,87 +1,25 @@
 <div data-page="news" class="page">
 	<div class="swiper-container">
     	<div class="swiper-wrapper">
-                    <div class="swiper-slide app-swiper">
+                    <div ng-repeat="news in newses" class="swiper-slide app-swiper">
 
                             <div class="app-img">
-                                <img class="img-tag" src="img/one.jpg">
+                                <img class="img-tag" src="{{api_base_url}}/assets/news_images/{{news.news_image}}">
                             </div>
                             <div class="app-con">
-                                  <div class="app-head">55 of 57 newly-elected RS members are crorepatis</div>
-                                  <div class="app-news">As many as 55 of the 57 newly-elected​ Rajya Sabha members are crorepatis, an Association for Democratic Reforms survey found. Praful Patel (over ₹252 crore) and Kapil Sibal (over ₹212 crore) were the MPs with the highest assets. The survey also found that 23% of the MPs were linked to criminal cases, including the 12% involved in serious criminal cases.</div>
-                                  <div class="app-by">short by Ankur Vyas / 07:47 am on 30 Jun 2016,Thursday</div>
+                                  <div class="app-head"> 
+                                    {{news.news_title}}
+                                  </div>
+                                  <div class="app-news">
+                                    {{news.news_body}}
+                                  </div>
+                                  <div class="app-by">short by Ankur Vyas / {{news.news_add_date | date : "EEEE, MM-dd-yyyy 'at' h:mm a" }} </div>
                                   <div class="app-more">read more at Hindustan Times</div>
 
                             </div> 
                     </div>
 
-                    <div class="swiper-slide app-swiper">
-                            <div class="app-img">
-                                <img class="img-tag" src="img/two.jpg">
-                            </div>
-                            <div class="app-con">
-                                  <div class="app-head">Shastri desperate to become coach: Gambhir</div>
-                                  <div class="app-news">Amid the controversy between Ravi Shastri and Sourav Ganguly over the Indian team's head coach position, Gautam Gambhir said, "I think it was Shastri’s desperation to become the coach that led him to make such statements". "I feel that Anil Kumble is best man for the job and he has been, deservingly, rewarded with the coveted position", Gambhir added.</div>
-                                  <div class="app-by">short by Ankur Vyas / 07:47 am on 30 Jun 2016,Thursday</div>
-                                  <div class="app-more">read more at Sportskeeda</div>
-
-                            </div> 
-                    </div>
-
-                    <div class="swiper-slide ks-slide-white app-swiper">
-                            <div class="app-img">
-                                <img class="img-tag" src="img/three.jpg">
-                            </div>
-                            <div class="app-con">
-                                  <div class="app-head">Supreme Court hears plea to end triple talaq</div>
-                                  <div class="app-news">The Supreme Court on Wednesday heard a plea that sought to end the practice of Muslim men divorcing their wives by saying "talaq" thrice. The court said it will examine how far it can interfere in Muslim laws "within the framework of the Constitution". It also asked the government for its views on whether intervening would violate Muslims' fundamental rights.
-                                  </div>
-                                  <div class="app-by">short by Ankur Vyas / 07:47 am on 30 Jun 2016,Thursday</div>
-                                  <div class="app-more">read more at Sportskeeda</div>
-
-                            </div> 
-                    </div>
-
-                    <div class="swiper-slide ks-slide-white app-swiper">
-                            <div class="app-img">
-                                <img class="img-tag" src="img/four.jpg">
-                            </div>
-
-                            <div class="app-con">
-                                  <div class="app-head">749 cr assets attached in YSRC chief graft case</div>
-                                  <div class="app-news">The Enforcement Directorate (ED) on Wednesday attached properties worth ₹749 crore belonging to YSR Congress president YS Jaganmohan Reddy and his wife in a graft case under the Prevention of Money Laundering Act. The ED said Reddy received bribes in the guise of investments in his companies, for favours granted by the previous YS Rajasekhar Reddy led-Andhra Pradesh government.</div>
-                                  <div class="app-by">short by Ankur Vyas / 07:47 am on 30 Jun 2016,Thursday</div>
-                                  <div class="app-more">read more at Sportskeeda</div>
-
-                            </div> 
-                    </div>
-
-                    <div class="swiper-slide ks-slide-white app-swiper">
-
-                            <div class="app-img">
-                                <img class="img-tag" src="img/five.jpg">
-                            </div>
-                            <div class="app-con">
-                                  <div class="app-head">Shastri desperate to become coach: Gambhir</div>
-                                  <div class="app-news">Amid the controversy between Ravi Shastri and Sourav Ganguly over the Indian team's head coach position, Gautam Gambhir said, "I think it was Shastri’s desperation to become the coach that led him to make such statements". "I feel that Anil Kumble is best man for the job and he has been, deservingly, rewarded with the coveted position", Gambhir added.</div>
-                                  <div class="app-by">short by Ankur Vyas / 07:47 am on 30 Jun 2016,Thursday</div>
-                                  <div class="app-more">read more at Sportskeeda</div>
-
-                            </div> 
-                    </div>
-
-                    <div class="swiper-slide ks-slide-white app-swiper">
-                            <div class="app-img">
-                                <img class="img-tag" src="img/six.jpg">
-                            </div>
-                            <div class="app-con">
-                                  <div class="app-head">Shastri desperate to become coach: Gambhir</div>
-                                  <div class="app-news">Amid the controversy between Ravi Shastri and Sourav Ganguly over the Indian team's head coach position, Gautam Gambhir said, "I think it was Shastri’s desperation to become the coach that led him to make such statements". "I feel that Anil Kumble is best man for the job and he has been, deservingly, rewarded with the coveted position", Gambhir added.</div>
-                                  <div class="app-by">short by Ankur Vyas / 07:47 am on 30 Jun 2016,Thursday</div>
-                                  <div class="app-more">read more at Sportskeeda</div>
-
-                            </div> 
-                    </div>
+            
     	</div>
 	</div>
 </div>
@@ -90,6 +28,7 @@
     var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',
         spaceBetween: 50,
+        observer : true,
     });
 
 </script>

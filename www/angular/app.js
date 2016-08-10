@@ -54,8 +54,17 @@ function( $rootScope , $state , $stateParams , seven , fns ) {
             alert('Unable to create database... !');
         }
 
+        if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
+            
+            if(!navigator.onLine) {
+                    seven.alert('Error.. Please check your internet connectivity to activate push notification'); return;
+                    return;
+            }
+            setTimeout(function(){
+                new fns.push();
+            },3000)
+        }
 
-
-}])
+}]);
 
 

@@ -22,7 +22,7 @@ app.service("fns", ['$http','C', function( $http , C ) {
     // Creating the table
 	this.createTables   = function() { 
 
-			var news_table_query 	= 'CREATE TABLE IF NOT EXISTS news_main (id INTEGER PRIMARY KEY AUTOINCREMENT,news_id int,news_title TEXT,news_body TEXT,news_image TEXT, news_type int, news_add_date DATE)';
+			var news_table_query 	= 'CREATE TABLE IF NOT EXISTS news_main (news_id int,news_title TEXT,news_body TEXT,news_image TEXT, news_type int, news_add_date DATE)';
 			this.query(news_table_query,[],function(res){
 				console.log(res);
 			});
@@ -47,4 +47,52 @@ app.service("fns", ['$http','C', function( $http , C ) {
 			 		// console.log('success');
 			});
 	}
+
+
+	this.push = function() {
+                console.log('Initializing Push...');
+                
+                var push = PushNotification.init({
+                    "android": {
+                        "senderID": "730309421478"
+                    },
+                });
+
+                push.on('registration', function(data) {
+                    var oldRegId = localStorage.getItem('registrationId');
+                    if (oldRegId !== data.registrationId) {
+                    	console.log('registration event: ' + data.registrationId);
+                        localStorage.setItem('registrationId', data.registrationId);
+                        $http.post(C.api_site_url+'push/register', {id:data.registrationId}).then(function(){
+                            alert('success');
+                            localStorage.registrationId = data.registrationId;
+                            localStorage.push = 1;
+                        });
+                    }
+
+                });
+
+                push.on('error', function(e) {
+                    console.log("push error = " + e.message);
+                });
+
+                push.on('notification', function(data) {
+                    console.log('notification event');
+                    alert('Push notification success!');
+                    alert(data.additionalData.id)
+                    // console.log('data.message');
+                    // console.log(data.message);
+                    // console.log(data.title);
+                    // console.log(data.count);
+                    // console.log(data.sound);
+                    // console.log(data.image);
+                    // console.log('data.additionalData');
+                    // console.log(data.test);
+                    // console.log(data.additionalData.id);
+                    // console.log(data.additionalData.foreground);
+                    // console.log(data.additionalData.coldstart);
+
+                });
+    }
+
 }]);

@@ -6,9 +6,9 @@ app.factory("seven", ['$http', function($http) {
     return myApp;   
 }]);
 
-app.factory("services", ['$http', function($http) {
-    // var serviceBase = 'http://localhost/OFC/factory/pro/';
-    var serviceBase = 'http://demo.vintechnosys.com/oddo_api/';
+app.factory("webServices", ['$http','C', function($http,C) {
+    var serviceBase = C.api_site_url;
+    // var serviceBase = 'http://demo.vintechnosys.com/oddo_api/';
     var obj = {};
     obj.master = function(func_name,post_data){
         return $http.post(serviceBase + func_name, post_data);
