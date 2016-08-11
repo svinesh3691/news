@@ -19,10 +19,10 @@ app.controller('app', ['$scope','seven','$state','webServices','fns','C','$http'
 app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsFactory','$http',
     function ( $scope , fns , seven , $state, webServices, C , newsFactory,$http) {
             seven.hideIndicator();
-            $scope.newses = [];
             $scope.api_base_url = C.api_base_url;
             var tillNow = localStorage.tillNow || 0;
             var populateNews = function() { 
+                $scope.newses = [];
                 fns.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
                         for (var i = 0;k = res.result.rows.length, i< k; i++) {
                             var thisNews = res.result.rows.item(i);
