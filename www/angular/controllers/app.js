@@ -18,6 +18,10 @@ app.controller('app', ['$scope','seven','$state','webServices','fns','C','$http'
 // Home Controller
 app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsFactory','$http',
     function ( $scope , fns , seven , $state, webServices, C , newsFactory,$http) {
+
+            // alert('New news updated...'); 
+
+
             seven.hideIndicator();
             $scope.api_base_url = C.api_base_url;
             var tillNow = localStorage.tillNow || 0;
@@ -26,8 +30,9 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                 fns.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
                         for (var i = 0;k = res.result.rows.length, i< k; i++) {
                             var thisNews = res.result.rows.item(i);
-                            thisNews.news_add_date = new Date(thisNews.news_add_date);
-                            k = new Date(res.result.rows.item(i).news_add_date);
+                            dt = new Date(res.result.rows.item(i).news_add_date);
+                            thisNews.news_add_dater =  new Date(res.result.rows.item(i).news_add_date);
+                            console.log(thisNews.news_add_dater);
                             $scope.newses.push(thisNews);
                             $scope.$apply();
                         }
@@ -62,7 +67,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
             var TpushService = {};
             TpushService.push = function() {
                         console.log('Initializing Push...');
-                        
+                            
                         var push = PushNotification.init({
                             "android": {
                                 "senderID": "730309421478"
@@ -92,6 +97,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
             }
 
             TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_image,news_type,news_add_date) {
+                    alert(colds_start);
                     fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
                             // newsFactory.newsRefresh();
                              // window.location.reload();
@@ -99,7 +105,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                                 window.location.reload();
                              } else {
                                 populateNews();
-                                seven.alert('New news updated...'); 
+                                alert('New news updated...'); 
 
                              }
                     });
