@@ -32,7 +32,6 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                             var thisNews = res.result.rows.item(i);
                             dt = new Date(res.result.rows.item(i).news_add_date);
                             thisNews.news_add_dater =  new Date(res.result.rows.item(i).news_add_date);
-                            console.log(thisNews.news_add_dater);
                             $scope.newses.push(thisNews);
                             $scope.$apply();
                         }
@@ -98,6 +97,8 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
 
             TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_image,news_type,news_add_date) {
                     fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
+                            localStorage.tillNow = news_id;
+                                
                             // newsFactory.newsRefresh();
                              // window.location.reload();
                              if(colds_start == false) {
