@@ -87,15 +87,21 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                         });
 
                         push.on('notification', function(data) { 
-                            TpushService.push_news(data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
+                            TpushService.push_news(data.additionalData.coldstart,data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
                         });
             }
 
-            TpushService.push_news = function(news_id,news_title,news_body,news_image,news_type,news_add_date) {
+            TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_image,news_type,news_add_date) {
                     fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
                             // newsFactory.newsRefresh();
                              // window.location.reload();
-                             populateNews();
+                             if(colds_start) {
+                                window.location.reload();
+                             } else {
+                                populateNews();
+                                seven.alert('New news updated...'); 
+
+                             }
                     });
             }
             
