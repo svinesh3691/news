@@ -29,6 +29,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                             thisNews.news_add_date = new Date(thisNews.news_add_date);
                             k = new Date(res.result.rows.item(i).news_add_date);
                             $scope.newses.push(thisNews);
+                            $scope.$apply();
                         }
                 }); 
             }
