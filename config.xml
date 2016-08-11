@@ -1,10 +1,11 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.getmehotnews.vin" version="1.0.0">
   <name>getMeHotNews</name>
-  <description>Hello World sample application that responds to the deviceready event.</description>
-  <author href="http://phonegap.com" email="support@phonegap.com">PhoneGap Team</author>
+  <description> Get me hot news android application</description>
+  <author href="http://vintechnosys.com" email="vintechnosys@gmail.com">VIN Technosys</author>
   <content src="index.html"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="android-minSdkVersion" value="14"/>
+  <preference name="orientation" value="portrait" />
   
 
   <plugin name="phonegap-plugin-push" spec="1.6.0">
@@ -16,7 +17,7 @@
   <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
 
   
-  <icon src="icon.png"/>
+  <icon src="www/icon.png"/>
   <platform name="android">
     <icon src="www/res/icon/android/drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="www/res/icon/android/drawable-mdpi-icon.png" density="mdpi"/>
