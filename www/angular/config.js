@@ -9,5 +9,5 @@ angular.module('configs', []).constant('C', {
     // 'api_site_url' : 'http://192.168.43.231/OFC/svinesh3691/news_app_admin/api/index.php/',
     // 'api_base_url' : 'http://192.168.43.231/OFC/svinesh3691/news_app_admin/api/'
     'api_site_url' : 'http://demo.vintechnosys.com/news/api/index.php/',
-    'api_base_url' : 'http://demo.vintechnosys.com/news/api/assets/news_images/'
+    'api_base_url' : 'http://demo.vintechnosys.com/news/api/'
 });
