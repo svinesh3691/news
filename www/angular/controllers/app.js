@@ -23,7 +23,14 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
             $scope.api_base_url = C.api_base_url;
             var tillNow = localStorage.tillNow || 0;
             var populateNews = function() { 
-                $scope.newses = newsFactory.theNewsArray;
+                fns.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
+                        for (var i = 0;k = res.result.rows.length, i< k; i++) {
+                            var thisNews = res.result.rows.item(i);
+                            thisNews.news_add_date = new Date(thisNews.news_add_date);
+                            k = new Date(res.result.rows.item(i).news_add_date);
+                            $scope.newses.push(thisNews);
+                        }
+                }); 
             }
             var fetchNews = function() {
                 webServices.master('api/fetchNews',{
@@ -45,8 +52,7 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
                     }
                     
                 });
-            }
-            // populateNews();
+            } 
             fetchNews();
 
 
@@ -86,8 +92,9 @@ app.controller('news', ['$scope','fns','seven','$state','webServices','C','newsF
 
             TpushService.push_news = function(news_id,news_title,news_body,news_image,news_type,news_add_date) {
                     fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
-                            newsFactory.newsRefresh();
+                            // newsFactory.newsRefresh();
                              // window.location.reload();
+                             populateNews();
                     });
             }
             
