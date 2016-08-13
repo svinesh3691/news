@@ -11,6 +11,7 @@ $(document).ready(function(){
 
 		/*First news population Function*/
 		function firstNewsPopulation() {
+			seven.alert('First Push');
 			if(!navigator.onLine) {
 				seven.confirm( 'No internet connection! <br> Internet is needed to start the application first time. <br> <br>  Please turn on your data/wifi and click ok ', '<span style="color:red">Error</span>',function(){
 					firstNewsPopulation();
@@ -29,6 +30,7 @@ $(document).ready(function(){
 		if (localStorage.firstFetch == '' || localStorage.firstFetch == undefined || localStorage.firstFetch != 1 ) {
 			return firstNewsPopulation();
 		} else {
+			seven.alert('Non-First Push');
 			setTimeout(function(){
 				populateNews(myDb);
 			},1111);
