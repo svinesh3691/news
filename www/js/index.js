@@ -133,7 +133,8 @@ TpushService.push = function() {
             });
 }
 TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_image,news_type,news_add_date) {
-        fns.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
+        var db = new dbClass();
+        db.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
                 localStorage.tillNow = news_id;
                  if(colds_start == false) {
                     window.location.reload();
