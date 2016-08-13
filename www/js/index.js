@@ -137,6 +137,7 @@ TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_
         alert('Push News');
         var dbs = new dbClass();
         alert('DBS');
+        dbs.createDatabase();
         dbs.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
                 alert('Res');
                 localStorage.tillNow = news_id;
