@@ -134,20 +134,14 @@ TpushService.push = function() {
             });
 }
 TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_image,news_type,news_add_date) {
-        alert('Push News');
         var dbs = new dbClass();
-        alert('DBS');
         dbs.createDatabase();
         dbs.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
-                alert('Res');
                 localStorage.tillNow = news_id;
-                alert(colds_start);
                 if(colds_start == false) {
-                    alert('Reload');
                     window.location.reload();
                 } else if(colds_start == undefined) {
-                    alert('Bla');
-                    populateNews();
+                    populateNews(dbs);
                     alert('New news updated...'); 
                 }
         });
