@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+		app.initialize();
 		// Database operations 
 		var myDb = new dbClass();
 		var dbCreate = myDb.createDatabase();  
@@ -14,19 +14,18 @@ $(document).ready(function(){
 			fetchNews(myDb);	
 		},2000)
         
-        
+        /*Pushes....*/
         if(!navigator.onLine) {
         	if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
                 alert('Error.. Please check your internet connectivity to activate push notification');
+                return;
             }
-        } else {
-        		setTimeout(function(){
-		            new TpushService.push();
-		        },3000);
         }
+		
+		setTimeout(function(){
+            new TpushService.push();
+        },3000);
         
-
-
 });
 	
 
