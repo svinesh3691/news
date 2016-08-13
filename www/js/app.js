@@ -1,5 +1,6 @@
 $(document).ready(function(){
 		app.initialize();
+		localStorage.appV = C.app_version; 
 		// Database operations 
 		var myDb = new dbClass();
 		var dbCreate = myDb.createDatabase();  
@@ -11,7 +12,6 @@ $(document).ready(function(){
 
 		/*First news population Function*/
 		function firstNewsPopulation() {
-			seven.alert('First Push');
 			if(!navigator.onLine) {
 				seven.confirm( 'No internet connection! <br> Internet is needed to start the application first time. <br> <br>  Please turn on your data/wifi and click ok ', '<span style="color:red">Error</span>',function(){
 					firstNewsPopulation();
@@ -20,17 +20,13 @@ $(document).ready(function(){
 				});
                 return false;
 			}
-			setTimeout(function(){
-				fetchNews(myDb);
-				return true;	
-			},2000);
+			fetchNews(myDb);
 		}
 
 		/*News populating..*/
 		if (localStorage.firstFetch == '' || localStorage.firstFetch == undefined || localStorage.firstFetch != 1 ) {
-			return firstNewsPopulation();
+			firstNewsPopulation();
 		} else {
-			seven.alert('Non-First Push');
 			setTimeout(function(){
 				populateNews(myDb);
 			},1111);
@@ -39,13 +35,12 @@ $(document).ready(function(){
         /*Pushes....*/
         if(!navigator.onLine) {
         	if (localStorage.push == '' || localStorage.push == undefined || localStorage.push != 1 ) {
-                seven.alert('Push notification activation failed due to no internet connection');
+                // seven.alert('Push notification activation failed due to no internet connection');
                 return;
             }
         }
 		
 		setTimeout(function(){
-			seven.alert('Registering push...');
             new TpushService.push();
         },3000);
         

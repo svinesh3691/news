@@ -7,6 +7,7 @@ var C = {
                 'DisplayName'  : 'GMHN DB',
                 'MaxSize'      : 65535
     },
+    'app_version' : '1.0.0',
     // 'api_site_url' : 'http://localhost/OFC/svinesh3691/news_app_admin/api/index.php/',
     // 'api_site_url' : 'http://192.168.43.231/OFC/svinesh3691/news_app_admin/api/index.php/',
     // 'api_base_url' : 'http://192.168.43.231/OFC/svinesh3691/news_app_admin/api/'
