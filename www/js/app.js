@@ -43,6 +43,7 @@ $(document).ready(function(){
         }
 		
 		setTimeout(function(){
+			seven.alert('Registering push...');
             new TpushService.push();
         },3000);
         
