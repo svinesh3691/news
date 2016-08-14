@@ -151,6 +151,7 @@ TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_
 function populateNews(myDb) { 
     var T = {};
     T.newses = [];
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     myDb.query("DELETE FROM news_main WHERE news_add_date <= date('now','-3 day')",[],function(res){
             myDb.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
                     for (var i = 0;k = res.result.rows.length, i< k; i++) {
@@ -166,16 +167,15 @@ function populateNews(myDb) {
                     template +=                    '<div class="swiper-slide app-swiper" data-hash="'+T.newses[i].news_id+'">';
 
                     template +=                            '<div class="app-img">';
-                    template +=                                '<img class="img-tag" src="'+C.api_base_url+'/assets/news_images/'+T.newses[i].news_image+'">';
+                    template +=                                '<img class="img-tag" onerror="this.src=\'hot_news.jpg\'" alt="Offline" src="'+C.api_base_url+'assets/news_images/'+T.newses[i].news_image+'">';
                     template +=                            '</div>';
                     template +=                            '<div class="app-con">';
                     template +=                                  '<div class="app-head">'+T.newses[i].news_title+'</div>';
-                    template +=                                  '<div class="app-news">'+T.newses[i].news_body+'</div>';
-                    template +=                                  '<div class="app-by">short by Ankur Vyas / ';
+                    template +=                                  '<div class="app-by"> on  ';
                                                         
                                                           var date = new Date(T.newses[i].news_add_date);
                                                         
-                    template +=                                    date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear(); 
+                    template +=                              days[date.getDay()] +' '+     date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear() + ' at '; 
                                                         'at';
                                                         
                                                           var hours = date.getHours();
@@ -188,7 +188,8 @@ function populateNews(myDb) {
                                                     
                     template +=                                    strTime;
                     template +=                                  '</div>';
-                    template +=                                  '<div class="app-more">read more at Hindustan Times</div>';
+                    template +=                                  '<div class="app-news">'+T.newses[i].news_body+'</div>';
+                    template +=                                  '<div class="app-more"></div>';
 
                     template +=                            '</div>';
                     template +=                    '</div>';

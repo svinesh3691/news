@@ -38,17 +38,18 @@ body {
 }
 
 .app-head {
-      font-size: 18px;
-      line-height: 24px;
-      margin: 10px 0;
+      font-size: 1.12em;
+      line-height: 1.23em;
+      margin: .26em 0 0px 0;
 }
 .app-news {
-        font-size: 14px;
-        line-height: 22px;
+        font-size: .86em;
+        line-height: 1.3em;
+        margin-top: 0.6em;
 }
 .app-by {
-  font-size: 12px;
-  line-height: 22px;
+  font-size: .68em;
+  line-height: 2.1em;
   color: #808290;
 }
 .app-more {
