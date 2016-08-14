@@ -44,6 +44,23 @@ $(document).ready(function(){
             new TpushService.push();
         },3000);
         
+        /*Version update*/
+        setTimeout(function(){
+        	if(navigator.onLine) {
+            	$.post(C.api_site_url+'api/getVersion',{},function(res) {
+                    	if(res && (res.status == 200)) {
+                    		if((res.version != C.app_version) && (parseInt(res.version) > parseInt(C.app_version)) ) {
+                    				seven.confirm( 'A new version of the app availiable. Would you like to download now ?', 'Upgrade app',function(){
+										window.location.href = "http://www.google.com";
+									},function(){
+										
+									});	
+                    		}
+                    	}
+                });
+            }
+
+        },7000);
 });
 	
 

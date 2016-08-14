@@ -7,7 +7,7 @@
                                 <img class="img-tag" src="{{T.api_base_url}}/assets/news_images/{{T.newses[i].news_image}}">
                             </div>
                             <div class="app-con">
-                                  <div class="app-head">55 of 57 newly-elected RS members are crorepatis</div>
+                                  <div class="app-head"> {{T.newses[i].news_title}} </div>
                                   <div class="app-news">{{T.newses[i].news_body}}</div>
                                   <div class="app-by">short by Ankur Vyas / 
                                     <%

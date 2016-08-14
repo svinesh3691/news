@@ -9,10 +9,10 @@ var C = {
     },
     'app_version' : '1.0.0',
     // 'api_site_url' : 'http://localhost/OFC/svinesh3691/news_app_admin/api/index.php/',
-    // 'api_site_url' : 'http://192.168.43.231/OFC/svinesh3691/news_app_admin/api/index.php/',
-    // 'api_base_url' : 'http://192.168.43.231/OFC/svinesh3691/news_app_admin/api/'
-    'api_site_url' : 'http://demo.vintechnosys.com/news/api/index.php/',
-    'api_base_url' : 'http://demo.vintechnosys.com/news/api/'
+    'api_site_url' : 'http://192.168.43.2/OFC/svinesh3691/news_app_admin/api/index.php/',
+    'api_base_url' : 'http://192.168.43.2/OFC/svinesh3691/news_app_admin/api/'
+    // 'api_site_url' : 'http://demo.vintechnosys.com/news/api/index.php/',
+    // 'api_base_url' : 'http://demo.vintechnosys.com/news/api/'
 }
 
 /*Seven*/
@@ -75,7 +75,7 @@ function dbClass() {
 
             var news_table_query    = 'CREATE TABLE IF NOT EXISTS news_main (news_id int,news_title TEXT,news_body TEXT,news_image TEXT, news_type int, news_add_date DATE)';
             this.query(news_table_query,[],function(res){
-                console.log(res);
+                // console.log(res);
             });
 
     }
@@ -103,7 +103,6 @@ function dbClass() {
 /*Push Class*/
 var TpushService = {};
 TpushService.push = function() {
-            console.log('Initializing Push...');
                 
             var push = PushNotification.init({
                 "android": {
@@ -152,62 +151,60 @@ TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_
 function populateNews(myDb) { 
     var T = {};
     T.newses = [];
-    myDb.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
-            for (var i = 0;k = res.result.rows.length, i< k; i++) {
-                var thisNews = res.result.rows.item(i);
-                dt = new Date(res.result.rows.item(i).news_add_date);
-                thisNews.news_add_dater =  new Date(res.result.rows.item(i).news_add_date);
-                T.newses.push(thisNews);
-            }
-            console.log('allNewses');
-            var template = '';
-            template += '<div class="swiper-container">';
-            template +=     '<div class="swiper-wrapper">';
-            for(var i=0; i < T.newses.length; i++) {
-            template +=                    '<div class="swiper-slide app-swiper" data-hash="'+T.newses[i].news_id+'">';
+    myDb.query("DELETE FROM news_main WHERE news_add_date <= date('now','-4 day')",[],function(res){
+            myDb.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
+                    for (var i = 0;k = res.result.rows.length, i< k; i++) {
+                        var thisNews = res.result.rows.item(i);
+                        dt = new Date(res.result.rows.item(i).news_add_date);
+                        thisNews.news_add_dater =  new Date(res.result.rows.item(i).news_add_date);
+                        T.newses.push(thisNews);
+                    }
+                    var template = '';
+                    template += '<div class="swiper-container">';
+                    template +=     '<div class="swiper-wrapper">';
+                    for(var i=0; i < T.newses.length; i++) {
+                    template +=                    '<div class="swiper-slide app-swiper" data-hash="'+T.newses[i].news_id+'">';
 
-            template +=                            '<div class="app-img">';
-            template +=                                '<img class="img-tag" src="'+C.api_base_url+'/assets/news_images/'+T.newses[i].news_image+'">';
-            template +=                            '</div>';
-            template +=                            '<div class="app-con">';
-            template +=                                  '<div class="app-head">55 of 57 newly-elected RS members are crorepatis</div>';
-            template +=                                  '<div class="app-news">'+T.newses[i].news_body+'</div>';
-            template +=                                  '<div class="app-by">short by Ankur Vyas / ';
-                                                
-                                                  var date = new Date(T.newses[i].news_add_date);
-                                                
-            template +=                                    date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear(); 
-                                                'at';
-                                                
-                                                  var hours = date.getHours();
-                                                  var minutes = date.getMinutes();
-                                                  var ampm = hours >= 12 ? "pm" : "am";
-                                                  hours = hours % 12;
-                                                  hours = hours ? hours : 12;  
-                                                  minutes = minutes < 10 ? "0"+minutes : minutes;
-                                                  var strTime = hours + ":" + minutes + " " + ampm;
-                                            
-            template +=                                    strTime;
-            template +=                                  '</div>';
-            template +=                                  '<div class="app-more">read more at Hindustan Times</div>';
+                    template +=                            '<div class="app-img">';
+                    template +=                                '<img class="img-tag" src="'+C.api_base_url+'/assets/news_images/'+T.newses[i].news_image+'">';
+                    template +=                            '</div>';
+                    template +=                            '<div class="app-con">';
+                    template +=                                  '<div class="app-head">'+T.newses[i].news_title+'</div>';
+                    template +=                                  '<div class="app-news">'+T.newses[i].news_body+'</div>';
+                    template +=                                  '<div class="app-by">short by Ankur Vyas / ';
+                                                        
+                                                          var date = new Date(T.newses[i].news_add_date);
+                                                        
+                    template +=                                    date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear(); 
+                                                        'at';
+                                                        
+                                                          var hours = date.getHours();
+                                                          var minutes = date.getMinutes();
+                                                          var ampm = hours >= 12 ? "pm" : "am";
+                                                          hours = hours % 12;
+                                                          hours = hours ? hours : 12;  
+                                                          minutes = minutes < 10 ? "0"+minutes : minutes;
+                                                          var strTime = hours + ":" + minutes + " " + ampm;
+                                                    
+                    template +=                                    strTime;
+                    template +=                                  '</div>';
+                    template +=                                  '<div class="app-more">read more at Hindustan Times</div>';
 
-            template +=                            '</div>';
-            template +=                    '</div>';
-                        }
-            template +=    '</div>';
-            template += '</div>';
+                    template +=                            '</div>';
+                    template +=                    '</div>';
+                                }
+                    template +=    '</div>';
+                    template += '</div>';
 
 
-            document.getElementById('app').innerHTML = template;
-            var swiper = new Swiper('.swiper-container', {
-                  pagination: '.swiper-pagination',
-                  spaceBetween: 50,
-                  observer : true,
-                  hashnav: true
+                    document.getElementById('app').innerHTML = template;
+                    var swiper = new Swiper('.swiper-container', {
+                          pagination: '.swiper-pagination',
+                          spaceBetween: 50,
+                          observer : true,
+                          hashnav: true
+                    });
             });
-
-
-
     });
 }
 function fetchNews(myDb) {
@@ -218,7 +215,7 @@ function fetchNews(myDb) {
         if (res.news) {
                 for (var i = 0 ; i < res.news.length; i++) { 
                             myDb.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [res.news[i].news_id,res.news[i].news_title,res.news[i].news_body,res.news[i].news_image,res.news[i].news_type,res.news[i].news_add_date],function(res){
-                                console.log(res);
+                                // console.log(res);
                             });
                 };
                 localStorage.firstFetch = 1;
