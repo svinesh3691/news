@@ -9,10 +9,10 @@ var C = {
     },
     'app_version' : '1.0.0',
     // 'api_site_url' : 'http://localhost/OFC/svinesh3691/news_app_admin/api/index.php/',
-    'api_site_url' : 'http://192.168.43.2/OFC/svinesh3691/news_app_admin/api/index.php/',
-    'api_base_url' : 'http://192.168.43.2/OFC/svinesh3691/news_app_admin/api/'
-    // 'api_site_url' : 'http://demo.vintechnosys.com/news/api/index.php/',
-    // 'api_base_url' : 'http://demo.vintechnosys.com/news/api/'
+    // 'api_site_url' : 'http://192.168.43.2/OFC/svinesh3691/news_app_admin/api/index.php/',
+    // 'api_base_url' : 'http://192.168.43.2/OFC/svinesh3691/news_app_admin/api/'
+    'api_site_url' : 'http://demo.vintechnosys.com/news/api/index.php/',
+    'api_base_url' : 'http://demo.vintechnosys.com/news/api/'
 }
 
 /*Seven*/
@@ -151,7 +151,7 @@ TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_
 function populateNews(myDb) { 
     var T = {};
     T.newses = [];
-    myDb.query("DELETE FROM news_main WHERE news_add_date <= date('now','-4 day')",[],function(res){
+    myDb.query("DELETE FROM news_main WHERE news_add_date <= date('now','-3 day')",[],function(res){
             myDb.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
                     for (var i = 0;k = res.result.rows.length, i< k; i++) {
                         var thisNews = res.result.rows.item(i);
