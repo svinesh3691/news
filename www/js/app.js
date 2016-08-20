@@ -35,7 +35,7 @@ $(document).ready(function(){
 
 			setTimeout(function(){
 				alert('set');
-				if(!navigator.onLine)  return false;
+				// if(!navigator.onLine)  return false;
 				alert('timeout');
 				interNews(myDb);
 			},7890);
@@ -58,7 +58,7 @@ $(document).ready(function(){
         
         /*Version update*/
         setTimeout(function(){
-        	if(navigator.onLine) {
+        	// if(navigator.onLine) {
             	$.post(C.api_site_url+'api/getVersion',{},function(res) {
                     	if(res && (res.status == 200)) {
                     		if((res.version != C.app_version) && (parseInt(res.version) > parseInt(C.app_version)) ) {
@@ -70,7 +70,7 @@ $(document).ready(function(){
                     		}
                     	}
                 });
-            }
+            // }
 
         },7000);
 });
