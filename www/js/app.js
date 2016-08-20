@@ -33,12 +33,10 @@ $(document).ready(function(){
 				populateNews(myDb);
 			},1111);
 
-			if(localStorage.tillNowTemp != '' && localStorage.tillNowTemp != undefined) {
-					setTimeout(function(){
-						if(!navigator.onLine)  return false;
-						interNews(myDb);
-					},7890);
-			}
+			setTimeout(function(){
+				if(!navigator.onLine)  return false;
+				interNews(myDb);
+			},7890);
 
 		}
 

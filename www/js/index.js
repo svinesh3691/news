@@ -137,11 +137,10 @@ TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_
         dbs.createDatabase();
         dbs.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
                 if(colds_start == false) {
-                    localStorage.tillNowTemp = news_id;
                     window.location.href = "";
                 } else if(colds_start == undefined) {
                     populateNews(dbs);
-                    localStorage.tillNow = news_id;
+                    // localStorage.tillNow = news_id;
                     alert('New news updated...'); 
                 }
         });
@@ -223,7 +222,6 @@ function fetchNews(myDb) {
                 };
                 localStorage.firstFetch = 1;
                 localStorage.tillNow = res.news[res.news.length-1].news_id;
-                localStorage.tillNowTemp = res.news[res.news.length-1].news_id;
                 populateNews(myDb);
         } else {
             populateNews(myDb);
@@ -235,7 +233,6 @@ function fetchNews(myDb) {
 function interNews(myDb) {
     var tillNowTemp = localStorage.tillNowTemp;
     var tillNow = localStorage.tillNow;
-    if(tillNowTemp==tillNow) return false;
     $.post(C.api_site_url+'api/fetchNews',{
                 'tillNow'       : tillNow,
     },function(res) {
@@ -252,7 +249,6 @@ function interNews(myDb) {
                                             insNewses(res.news[i],myDb);
                                     }
                                     localStorage.tillNow = res.news[res.news.length-1].news_id;
-                                    localStorage.tillNowTemp = res.news[res.news.length-1].news_id;
                         };
                         alert('New news updated...'); 
 
