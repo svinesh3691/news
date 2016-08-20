@@ -23,6 +23,8 @@ $(document).ready(function(){
 			fetchNews(myDb);
 		}
 
+
+
 		/*News populating..*/
 		if (localStorage.firstFetch == '' || localStorage.firstFetch == undefined || localStorage.firstFetch != 1 ) {
 			firstNewsPopulation();
@@ -30,7 +32,17 @@ $(document).ready(function(){
 			setTimeout(function(){
 				populateNews(myDb);
 			},1111);
+
+			if(localStorage.tillNowTemp != '' && localStorage.tillNowTemp != undefined) {
+					setTimeout(function(){
+						if(!navigator.onLine)  return false;
+						interNews(myDb);
+					},7890);
+			}
+
 		}
+
+		
         
         /*Pushes....*/
         if(!navigator.onLine) {

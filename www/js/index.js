@@ -9,8 +9,8 @@ var C = {
     },
     'app_version' : '1.0.0',
     // 'api_site_url' : 'http://localhost/OFC/svinesh3691/news_app_admin/api/index.php/',
-    // 'api_site_url' : 'http://192.168.43.2/OFC/svinesh3691/news_app_admin/api/index.php/',
-    // 'api_base_url' : 'http://192.168.43.2/OFC/svinesh3691/news_app_admin/api/'
+    // 'api_site_url' : 'http://192.168.43.231/OFC/svinesh3691/news_app_admin/api/index.php/',
+    // 'api_base_url' : 'http://192.168.43.231/OFC/svinesh3691/news_app_admin/api/'
     'api_site_url' : 'http://demo.vintechnosys.com/news/api/index.php/',
     'api_base_url' : 'http://demo.vintechnosys.com/news/api/'
 }
@@ -136,15 +136,17 @@ TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_
         var dbs = new dbClass();
         dbs.createDatabase();
         dbs.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
-                localStorage.tillNow = news_id;
                 if(colds_start == false) {
+                    localStorage.tillNowTemp = news_id;
                     window.location.href = "";
                 } else if(colds_start == undefined) {
                     populateNews(dbs);
+                    localStorage.tillNow = news_id;
                     alert('New news updated...'); 
                 }
         });
 }
+
 
 
 /*News Function*/
@@ -216,15 +218,55 @@ function fetchNews(myDb) {
         if (res.news) {
                 for (var i = 0 ; i < res.news.length; i++) { 
                             myDb.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [res.news[i].news_id,res.news[i].news_title,res.news[i].news_body,res.news[i].news_image,res.news[i].news_type,res.news[i].news_add_date],function(res){
-                                // console.log(res);
+                                
                             });
                 };
                 localStorage.firstFetch = 1;
                 localStorage.tillNow = res.news[res.news.length-1].news_id;
+                localStorage.tillNowTemp = res.news[res.news.length-1].news_id;
                 populateNews(myDb);
         } else {
             populateNews(myDb);
         }
     });
 
+}
+
+function interNews(myDb) {
+    var tillNowTemp = localStorage.tillNowTemp;
+    var tillNow = localStorage.tillNow;
+    if(tillNowTemp==tillNow) return false;
+    $.post(C.api_site_url+'api/fetchNews',{
+                'tillNow'       : tillNow,
+    },function(res) {
+        if (res.news) {
+                myDb.query('SELECT news_id FROM news_main',[],function(resu){
+                        var alr_newses = [];
+                        for (var i = 0;k = resu.result.rows.length, i< k; i++) {
+                            var thnews = resu.result.rows.item(i);
+                            alr_newses.push(resu.result.rows.item(i).news_id);
+                        }
+
+                        for (var i = 0 ; i < res.news.length; i++) {
+                                    if(alr_newses.indexOf(parseInt(res.news[i].news_id)) == -1) {
+                                            insNewses(res.news[i],myDb);
+                                    }
+                                    localStorage.tillNow = res.news[res.news.length-1].news_id;
+                                    localStorage.tillNowTemp = res.news[res.news.length-1].news_id;
+                        };
+                        alert('New news updated...'); 
+
+                });
+
+               
+        }
+    });
+}
+
+
+
+function insNewses(news,myDb) {
+            myDb.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news.news_id,news.news_title,news.news_body,news.news_image,news.news_type,news.news_add_date],function(res){
+            });
+            populateNews(myDb);
 }
