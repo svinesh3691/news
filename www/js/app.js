@@ -34,9 +34,7 @@ $(document).ready(function(){
 			},1111);
 
 			setTimeout(function(){
-				alert('set');
 				// if(!navigator.onLine)  return false;
-				alert('timeout');
 				interNews(myDb);
 			},7890);
 

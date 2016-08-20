@@ -231,26 +231,21 @@ function fetchNews(myDb) {
 }
 
 function interNews(myDb) {
-    alert('interNews');
     var tillNow = localStorage.tillNow;
     $.post(C.api_site_url+'api/fetchNews',{
                 'tillNow'       : tillNow,
     },function(res) {
-    alert('res');
 
         if (res.news) {
-    alert('res-true');
 
                 myDb.query('SELECT news_id FROM news_main',[],function(resu){
                         var alr_newses = [];
-    alert('res-one');
 
                         for (var i = 0;k = resu.result.rows.length, i< k; i++) {
                             var thnews = resu.result.rows.item(i);
                             alr_newses.push(resu.result.rows.item(i).news_id);
                         }
 
-    alert('res-two');
                         for (var i = 0 ; i < res.news.length; i++) {
                                     if(alr_newses.indexOf(parseInt(res.news[i].news_id)) == -1) {
                                             insNewses(res.news[i],myDb);
@@ -269,7 +264,6 @@ function interNews(myDb) {
 
 
 function insNewses(news,myDb) {
-    alert('res-three');
             myDb.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news.news_id,news.news_title,news.news_body,news.news_image,news.news_type,news.news_add_date],function(res){
             });
             populateNews(myDb);
