@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 		app.initialize();
 		localStorage.appV = C.app_version; 
 		// Database operations 
@@ -12,7 +13,8 @@ $(document).ready(function(){
 
 		/*First news population Function*/
 		function firstNewsPopulation() {
-			if(!navigator.onLine) {
+			var connected = checkConnection();
+			if(!connected) {
 				seven.confirm( 'No internet connection! <br> Internet is needed to start the application first time. <br> <br>  Please turn on your data/wifi and click ok ', '<span style="color:red">Error</span>',function(){
 					firstNewsPopulation();
 				},function(){
