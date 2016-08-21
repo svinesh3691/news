@@ -141,7 +141,9 @@ TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_
                 } else if(colds_start == undefined) {
                     populateNews(dbs);
                     // localStorage.tillNow = news_id;
-                    alert('New news updated...'); 
+                    seven.addNotification({
+                            message: 'New news/jobs updated...'
+                    });
                 }
         });
 }
@@ -252,7 +254,9 @@ function interNews(myDb) {
                                     }
                                     localStorage.tillNow = res.news[res.news.length-1].news_id;
                         };
-                        alert('New news updated...'); 
+                        seven.addNotification({
+                            message: 'New news/jobs updated...'
+                        });
 
                 });
 

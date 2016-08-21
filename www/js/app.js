@@ -26,8 +26,6 @@ $(document).ready(function(){
 
 		}
 
-		localStorage.firstFetch ='';
-
 		/*News populating..*/
 		if (localStorage.firstFetch == '' || localStorage.firstFetch == undefined || localStorage.firstFetch != 1 ) {
 			firstNewsPopulation();
@@ -38,9 +36,14 @@ $(document).ready(function(){
 
 			setTimeout(function(){
 				isOnline(function(){
+					seven.addNotification({
+			            message: 'Simple message'
+			        });
 					interNews(myDb);
 				},function(){
-
+					seven.addNotification({
+			            message: 'No internet connection found to check for new news/jobs'
+			        });
 				})
 			},7890);
 
