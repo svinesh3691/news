@@ -15,6 +15,9 @@ $(document).ready(function(){
 		function firstNewsPopulation() {
 			isOnline(function(){
 				fetchNews(myDb);
+				setTimeout(function(){
+		            new TpushService.push();
+		        },3000);
 			},function(){
 				seven.confirm( 'No internet connection! <br> Internet is needed to start the application first time. <br> <br>  Please turn on your data/wifi and click ok ', '<span style="color:red">Error</span>',function(){
 					firstNewsPopulation();
@@ -36,9 +39,6 @@ $(document).ready(function(){
 
 			setTimeout(function(){
 				isOnline(function(){
-					seven.addNotification({
-			            message: 'Simple message'
-			        });
 					interNews(myDb);
 				},function(){
 					seven.addNotification({
