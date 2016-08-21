@@ -38,6 +38,11 @@ $(document).ready(function(){
 			},1111);
 
 			setTimeout(function(){
+	            new TpushService.push();
+	        },3000);
+
+	        
+			setTimeout(function(){
 				isOnline(function(){
 					interNews(myDb);
 				},function(){
@@ -59,9 +64,6 @@ $(document).ready(function(){
             }
         }
 		
-		setTimeout(function(){
-            new TpushService.push();
-        },3000);
         
         /*Version update*/
         setTimeout(function(){
