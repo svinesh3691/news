@@ -270,20 +270,18 @@ function insNewses(news,myDb) {
 }
 
 
-function checkConnection(){
-   var networkState = navigator.connection.type;
-
-   var states = {};
-   states[Connection.UNKNOWN]  = 'Unknown connection';
-   states[Connection.ETHERNET] = 'Ethernet connection';
-   states[Connection.WIFI]     = 'WiFi connection';
-   states[Connection.CELL_2G]  = 'Cell 2G connection';
-   states[Connection.CELL_3G]  = 'Cell 3G connection';
-   states[Connection.CELL_4G]  = 'Cell 4G connection';
-   states[Connection.CELL]     = 'Cell generic connection';
-   states[Connection.NONE]     = 'No network connection';
-
-   if(states[networkState].indexOf("WiFi") != -1 || states[networkState].indexOf("Cell") != -1)
-        return true;
-   else return false;
+function isOnline(yes,no){
+    var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttp');
+    xhr.onload = function(){
+        if(yes instanceof Function){
+            yes();
+        }
+    }
+    xhr.onerror = function(){
+        if(no instanceof Function){
+            no();
+        }
+    }
+    xhr.open("GET",C.api_site_url+'api/getVersion',true);
+    xhr.send();
 }

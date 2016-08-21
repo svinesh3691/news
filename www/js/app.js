@@ -13,19 +13,20 @@ $(document).ready(function(){
 
 		/*First news population Function*/
 		function firstNewsPopulation() {
-			var connected = checkConnection();
-			if(!connected) {
+			isOnline(function(){
+				fetchNews(myDb);
+			},function(){
 				seven.confirm( 'No internet connection! <br> Internet is needed to start the application first time. <br> <br>  Please turn on your data/wifi and click ok ', '<span style="color:red">Error</span>',function(){
 					firstNewsPopulation();
 				},function(){
 					navigator.app.exitApp();
 				});
                 return false;
-			}
-			fetchNews(myDb);
+			})
+
 		}
 
-
+		localStorage.firstFetch ='';
 
 		/*News populating..*/
 		if (localStorage.firstFetch == '' || localStorage.firstFetch == undefined || localStorage.firstFetch != 1 ) {
@@ -36,8 +37,11 @@ $(document).ready(function(){
 			},1111);
 
 			setTimeout(function(){
-				// if(!navigator.onLine)  return false;
-				interNews(myDb);
+				isOnline(function(){
+					interNews(myDb);
+				},function(){
+
+				})
 			},7890);
 
 		}
@@ -58,8 +62,8 @@ $(document).ready(function(){
         
         /*Version update*/
         setTimeout(function(){
-        	// if(navigator.onLine) {
-            	$.post(C.api_site_url+'api/getVersion',{},function(res) {
+            isOnline(function(){
+            		$.post(C.api_site_url+'api/getVersion',{},function(res) {
                     	if(res && (res.status == 200)) {
                     		if((res.version != C.app_version) && (parseInt(res.version) > parseInt(C.app_version)) ) {
                     				seven.confirm( 'A new version of the app availiable. Would you like to download now ?', 'Upgrade app',function(){
@@ -70,9 +74,11 @@ $(document).ready(function(){
                     		}
                     	}
                 });
-            // }
+            },function(){
 
-        },7000);
+            });
+
+        },14000);
 });
 	
 
