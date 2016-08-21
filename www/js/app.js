@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
 		app.initialize();
+		localStorage.notifyingUpdate = 0;
 		localStorage.appV = C.app_version; 
 		// Database operations 
 		var myDb = new dbClass();
@@ -41,7 +42,7 @@ $(document).ready(function(){
 	            new TpushService.push();
 	        },3000);
 
-	        
+
 			setTimeout(function(){
 				isOnline(function(){
 					interNews(myDb);
