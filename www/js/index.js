@@ -73,8 +73,8 @@ function dbClass() {
     // Creating the table
     this.createTables   = function() { 
 
-            var news_table_query    = 'CREATE TABLE IF NOT EXISTS news_main (news_id int,news_title TEXT,news_body TEXT,news_image TEXT, news_type int, news_add_date DATE)';
-            this.query(news_table_query,[],function(res){
+            var news_table_query    = 'CREATE TABLE IF NOT EXISTS news_main (news_id int,news_title TEXT,news_body TEXT,news_image TEXT, news_type int, news_from TEXT ,news_from_link TEXT, news_by_name TEXT, news_status int, news_add_date DATE)';
+            this.query(news_table_query,[],function(res) {
                 // console.log(res);
             });
 
@@ -129,13 +129,13 @@ TpushService.push = function() {
             });
 
             push.on('notification', function(data) { 
-                TpushService.push_news(data.additionalData.coldstart,data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_add_date);
+                TpushService.push_news(data.additionalData.coldstart,data.additionalData.id,data.title,data.message,data.additionalData.news_image,data.additionalData.news_type,data.additionalData.news_from,data.additionalData.news_from_link,data.additionalData.news_by_name,data.additionalData.news_status,data.additionalData.news_add_date);
             });
 }
-TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_image,news_type,news_add_date) {
+TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_image,news_type,news_from,news_from_link,news_by_name,news_status,news_add_date) {
         var dbs = new dbClass();
         dbs.createDatabase();
-        dbs.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_add_date],function(res){
+        dbs.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_from,news_from_link,news_by_name,news_status,news_add_date) VALUES (?,?,?,?,?,?,?,?,?,?)', [news_id,news_title,news_body,news_image,news_type,news_from,news_from_link,news_by_name,news_status,news_add_date],function(res){
                 if(colds_start == false) {
                     window.location.href = "";
                 } else if(colds_start == undefined) {
@@ -161,7 +161,7 @@ TpushService.push_news = function(colds_start,news_id,news_title,news_body,news_
 function populateNews(myDb) { 
     var T = {};
     T.newses = [];
-    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var days = ["ஞாயிறு","திங்கள்","செவ்வாய்","புதன்","வியாழன்","வெள்ளி","சனி"];
     myDb.query("DELETE FROM news_main WHERE news_add_date <= date('now','-3 day')",[],function(res){
             myDb.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
                     for (var i = 0;k = res.result.rows.length, i< k; i++) {
@@ -181,11 +181,11 @@ function populateNews(myDb) {
                     template +=                            '</div>';
                     template +=                            '<div class="app-con">';
                     template +=                                  '<div class="app-head">'+T.newses[i].news_title+'</div>';
-                    template +=                                  '<div class="app-by"> on  ';
+                    template +=                                  '<div class="app-by">   ';
                                                         
                                                           var date = new Date(T.newses[i].news_add_date);
                                                         
-                    template +=                              days[date.getDay()] +' '+     date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear() + ' at '; 
+                    template +=                              days[date.getDay()] +' '+     date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear() +', '; 
                                                         'at';
                                                         
                                                           var hours = date.getHours();
@@ -199,7 +199,7 @@ function populateNews(myDb) {
                     template +=                                    strTime;
                     template +=                                  '</div>';
                     template +=                                  '<div class="app-news">'+T.newses[i].news_body+'</div>';
-                    template +=                                  '<div class="app-more"></div>';
+                    template +=                                  '<div class="app-more"> முழு செய்தியறிய க்ளிக் <a href="'+T.newses[i].news_from_link+'"> '+T.newses[i].news_from+' </a> </div>';
 
                     template +=                            '</div>';
                     template +=                    '</div>';
@@ -225,7 +225,7 @@ function fetchNews(myDb) {
     },function(res) {
         if (res.news) {
                 for (var i = 0 ; i < res.news.length; i++) { 
-                            myDb.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [res.news[i].news_id,res.news[i].news_title,res.news[i].news_body,res.news[i].news_image,res.news[i].news_type,res.news[i].news_add_date],function(res){
+                            myDb.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_from,news_from_link,news_by_name,news_status,news_add_date) VALUES (?,?,?,?,?,?,?,?,?,?)', [res.news[i].news_id,res.news[i].news_title,res.news[i].news_body,res.news[i].news_image,res.news[i].news_type,res.news[i].news_from,res.news[i].news_from_link,res.news[i].news_by_name,res.news[i].news_status,res.news[i].news_add_date],function(res){
                                 
                             });
                 };
@@ -282,7 +282,7 @@ function interNews(myDb) {
 
 
 function insNewses(news,myDb) {
-            myDb.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_add_date) VALUES (?,?,?,?,?,?)', [news.news_id,news.news_title,news.news_body,news.news_image,news.news_type,news.news_add_date],function(res){
+            myDb.query('INSERT into news_main (news_id,news_title,news_body,news_image,news_type,news_from,news_from_link,news_by_name,news_status,news_add_date) VALUES (?,?,?,?,?,?,?,?,?,?)', [news.news_id,news.news_title,news.news_body,news.news_image,news.news_type,news.news_from,news.news_from_link,news.news_by_name,news.news_status,news.news_add_date],function(res){
             });
             populateNews(myDb);
 }
