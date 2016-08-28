@@ -85,6 +85,12 @@ $(document).ready(function(){
             });
 
         },14000);
+
+
+
+        $(document).on('click','.hrf',function(){
+        	window.location.href = $(this).attr('href'); 
+        });
 });
 	
 

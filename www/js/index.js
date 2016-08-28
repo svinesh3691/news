@@ -199,7 +199,7 @@ function populateNews(myDb) {
                     template +=                                    strTime;
                     template +=                                  '</div>';
                     template +=                                  '<div class="app-news">'+T.newses[i].news_body+'</div>';
-                    template +=                                  '<div class="app-more"> முழு செய்தியறிய க்ளிக் <a href="'+T.newses[i].news_from_link+'"> '+T.newses[i].news_from+' </a> </div>';
+                    template +=                                  '<div class="app-more"> முழு செய்தியறிய க்ளிக் <a class="hrf" href="'+T.newses[i].news_from_link+'"> '+T.newses[i].news_from+' </a> </div>';
 
                     template +=                            '</div>';
                     template +=                    '</div>';
