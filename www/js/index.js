@@ -163,7 +163,7 @@ function populateNews(myDb) {
     T.newses = [];
     var days = ["ஞாயிறு","திங்கள்","செவ்வாய்","புதன்","வியாழன்","வெள்ளி","சனி"];
     myDb.query("DELETE FROM news_main WHERE news_add_date <= date('now','-3 day')",[],function(res){
-            myDb.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function(res){
+            myDb.query('SELECT * FROM news_main ORDER BY `news_id` DESC',[],function (res) {
                     for (var i = 0;k = res.result.rows.length, i< k; i++) {
                         var thisNews = res.result.rows.item(i);
                         dt = new Date(res.result.rows.item(i).news_add_date);
@@ -174,36 +174,48 @@ function populateNews(myDb) {
                     template += '<div class="swiper-container">';
                     template +=     '<div class="swiper-wrapper">';
                     for(var i=0; i < T.newses.length; i++) {
-                    template +=                    '<div class="swiper-slide app-swiper" data-hash="'+T.newses[i].news_id+'">';
+                        if(T.newses[i].news_type != 3) {
 
-                    template +=                            '<div class="app-img">';
-                    template +=                                '<img class="img-tag" onerror="this.src=\'hot_news.jpg\'" alt="Offline" src="'+C.api_base_url+'assets/news_images/'+T.newses[i].news_image+'">';
-                    template +=                            '</div>';
-                    template +=                            '<div class="app-con">';
-                    template +=                                  '<div class="app-head">'+T.newses[i].news_title+'</div>';
-                    template +=                                  '<div class="app-by">   ';
-                                                        
-                                                          var date = new Date(T.newses[i].news_add_date);
-                                                        
-                    template +=                              days[date.getDay()] +' '+     date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear() +', '; 
-                                                        'at';
-                                                        
-                                                          var hours = date.getHours();
-                                                          var minutes = date.getMinutes();
-                                                          var ampm = hours >= 12 ? "pm" : "am";
-                                                          hours = hours % 12;
-                                                          hours = hours ? hours : 12;  
-                                                          minutes = minutes < 10 ? "0"+minutes : minutes;
-                                                          var strTime = hours + ":" + minutes + " " + ampm;
-                                                    
-                    template +=                                    strTime;
-                    template +=                                  '</div>';
-                    template +=                                  '<div class="app-news">'+T.newses[i].news_body+'</div>';
-                    template +=                                  '<div class="app-more"> முழு செய்தியறிய க்ளிக் <a class="hrf" href="'+T.newses[i].news_from_link+'"> '+T.newses[i].news_from+' </a> </div>';
+                                template +=                    '<div class="swiper-slide app-swiper" data-hash="'+T.newses[i].news_id+'">';
 
-                    template +=                            '</div>';
-                    template +=                    '</div>';
-                                }
+                                template +=                            '<div class="app-img">';
+                                template +=                                '<img class="img-tag" onerror="this.src=\'hot_news.jpg\'" alt="Offline" src="'+C.api_base_url+'assets/news_images/'+T.newses[i].news_image+'">';
+                                template +=                            '</div>';
+                                template +=                            '<div class="app-con">';
+                                template +=                                  '<div class="app-head">'+T.newses[i].news_title+'</div>';
+                                template +=                                  '<div class="app-by">   ';
+                                                                    
+                                                                      var date = new Date(T.newses[i].news_add_date);
+                                                                    
+                                template +=                              days[date.getDay()] +' '+     date.getDate()+'-'+parseInt(date.getMonth()+1)+'-'+date.getFullYear() +', '; 
+                                                                    'at';
+                                                                    
+                                                                      var hours = date.getHours();
+                                                                      var minutes = date.getMinutes();
+                                                                      var ampm = hours >= 12 ? "pm" : "am";
+                                                                      hours = hours % 12;
+                                                                      hours = hours ? hours : 12;  
+                                                                      minutes = minutes < 10 ? "0"+minutes : minutes;
+                                                                      var strTime = hours + ":" + minutes + " " + ampm;
+                                                                
+                                template +=                                    strTime;
+                                template +=                                  '</div>';
+                                template +=                                  '<div class="app-news">'+T.newses[i].news_body+'</div>';
+                                template +=                                  '<div class="app-more"> முழு செய்தியறிய க்ளிக் <a class="hrf" href="'+T.newses[i].news_from_link+'"> '+T.newses[i].news_from+' </a> </div>';
+
+                                template +=                            '</div>';
+                                template +=                    '</div>';
+                        } else {
+
+                                template +=                    '<div class="swiper-slide app-swiper" data-hash="'+T.newses[i].news_id+'">';
+
+                                template +=                            '<div class="app-img" style="height:100%">';
+                                template +=                                '<img class="img-tag" style="    border-radius: 12px;" onerror="this.src=\'hot_news.jpg\'" alt="Offline" src="'+C.api_base_url+'assets/news_images/'+T.newses[i].news_image+'">';
+                                template +=                            '</div>';
+                                
+                                template +=                    '</div>';
+                        }
+                    }
                     template +=    '</div>';
                     template += '</div>';
 
